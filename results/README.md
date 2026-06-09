@@ -17,7 +17,7 @@ This folder contains generated tables and figures from the original PEM fuel-cel
 
 ## Generated figures
 
-- `figures/eis_nyquist`: whole-stack Nyquist scatter plots with dotted fitted semicircles.
+- `figures/eis_fits`: individual Nyquist scatter plots with dotted two-circle fits.
 - `figures/eis_trends`: resistance trends by stack, current density, and sheet.
 - `figures/polarization_curves`: polarization curves and voltage trends.
 
