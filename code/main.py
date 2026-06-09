@@ -99,10 +99,39 @@ def robust_eis_data(df: pd.DataFrame) -> pd.DataFrame:
     return clean.sort_values("Frequency / Hz", ascending=False)
 
 
+def scatter_with_guide(
+    ax: plt.Axes,
+    x: pd.Series,
+    y: pd.Series,
+    *,
+    size: float,
+    alpha: float,
+    line_width: float,
+    label: str | None = None,
+) -> None:
+    line = ax.plot(x, y, linestyle=":", linewidth=line_width, alpha=alpha)[0]
+    ax.scatter(
+        x,
+        y,
+        s=size,
+        facecolors="none",
+        edgecolors=line.get_color(),
+        linewidths=0.8,
+        alpha=alpha,
+        label=label,
+    )
+
+
 def plot_eis_single(df: pd.DataFrame, meta: dict[str, object]) -> Path:
     fig, ax = plt.subplots(figsize=(5.0, 3.8), constrained_layout=True)
-    ax.scatter(df["Z_Re / Ohm"], df["-Z_Im / Ohm"], s=15, alpha=0.78)
-    ax.plot(df["Z_Re / Ohm"], df["-Z_Im / Ohm"], linestyle=":", linewidth=1.2)
+    scatter_with_guide(
+        ax,
+        df["Z_Re / Ohm"],
+        df["-Z_Im / Ohm"],
+        size=15,
+        alpha=0.78,
+        line_width=1.2,
+    )
     ax.set_xlabel("Z_Re / Ohm")
     ax.set_ylabel("-Z_Im / Ohm")
     ax.set_title(
@@ -134,8 +163,15 @@ def plot_eis_group(items: list[tuple[pd.DataFrame, dict[str, object]]], key: tup
     fig, ax = plt.subplots(figsize=(5.8, 4.2), constrained_layout=True)
     for df, meta in sorted(items, key=lambda item: (int(item[1]["cycles"]), str(item[1]["file"]))):
         label = f"{int(meta['cycles'])} cycles"
-        ax.scatter(df["Z_Re / Ohm"], df["-Z_Im / Ohm"], s=10, alpha=0.65, label=label)
-        ax.plot(df["Z_Re / Ohm"], df["-Z_Im / Ohm"], linestyle=":", linewidth=1.0)
+        scatter_with_guide(
+            ax,
+            df["Z_Re / Ohm"],
+            df["-Z_Im / Ohm"],
+            size=10,
+            alpha=0.65,
+            line_width=1.0,
+            label=label,
+        )
     ax.set_xlabel("Z_Re / Ohm")
     ax.set_ylabel("-Z_Im / Ohm")
     ax.set_title(f"{stack} {sheet_label}, condition {condition}, {current:g} A/cm^2")
@@ -232,8 +268,15 @@ def plot_pol_single(df: pd.DataFrame, meta: dict[str, object]) -> Path:
             line_width = 0.9
             alpha = 0.55
         curve = df[[x_col, col]].dropna().sort_values(x_col)
-        ax.scatter(curve[x_col], curve[col], s=12, alpha=alpha, label=col.replace(" (mV)", ""))
-        ax.plot(curve[x_col], curve[col], linestyle=":", linewidth=line_width, alpha=alpha)
+        scatter_with_guide(
+            ax,
+            curve[x_col],
+            curve[col],
+            size=12,
+            alpha=alpha,
+            line_width=line_width,
+            label=col.replace(" (mV)", ""),
+        )
     ax.set_xlabel(x_col)
     ax.set_ylabel("Voltage (mV)")
     ax.set_title(f"{meta['stack']} polarization, {meta['cycle_label']}")
@@ -254,8 +297,15 @@ def plot_pol_stack(group: pd.DataFrame, stack: str) -> Path:
     fig, ax = plt.subplots(figsize=(5.8, 4.2), constrained_layout=True)
     for cycle_label, curve in group.groupby("cycle_label"):
         curve = curve[[x_col, y_col]].dropna().sort_values(x_col)
-        ax.scatter(curve[x_col], curve[y_col], s=16, alpha=0.75, label=str(cycle_label))
-        ax.plot(curve[x_col], curve[y_col], linestyle=":", linewidth=1.2)
+        scatter_with_guide(
+            ax,
+            curve[x_col],
+            curve[y_col],
+            size=16,
+            alpha=0.75,
+            line_width=1.2,
+            label=str(cycle_label),
+        )
     ax.set_xlabel(x_col)
     ax.set_ylabel(y_col)
     ax.set_title(f"{stack} average-voltage polarization curves")

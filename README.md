@@ -32,7 +32,7 @@ The script regenerates `results/` from the Excel files under `data/`.
 
 - EIS plots are raw Nyquist-style visualizations: `Z_Re / Ohm` vs `-Z_Im / Ohm`.
 - No semicircle fitting, resistance extraction, or fitted resistance tracking is included.
-- All plots use scatter markers plus dotted guide lines.
+- All plots use hollow scatter markers plus dotted guide lines.
 - Axis labels follow original column names where applicable.
 - Matplotlib is configured to use Times New Roman.
 
@@ -158,4 +158,3 @@ P. Thiele, Y. Yang, S. Dirkes, M. Wick, S. Pischinger, Realistic accelerated str
 ## Source
 
 - https://zenodo.org/records/13166135
-
