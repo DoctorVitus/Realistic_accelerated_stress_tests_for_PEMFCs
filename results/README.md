@@ -1,25 +1,16 @@
-# PEMFC Ageing Dataset Analysis Results
+# Generated Results
 
-This folder contains generated tables and figures from the original PEM fuel-cell ageing dataset.
+This folder contains visualization-only outputs generated from the original dataset.
 
-## EIS fitting convention
+- EIS individual plots: 801
+- Polarization individual plots: 7
 
-- Nyquist plots use `Z_Re / Ohm` versus `-Z_Im / Ohm`.
-- `R_ohm_ohm` is estimated from the high-frequency x-axis intercept of the first fitted semicircle.
-- `R_anode_ct_ohm` is assigned to the high-frequency semicircle diameter.
-- `R_cathode_ct_ohm` is assigned to the low-frequency semicircle diameter.
-- Fits use algebraic circle fitting, so the script does not require SciPy.
+No resistance extraction or curve-fitting-derived parameter table is included.
 
-## Generated tables
+## Main folders
 
-- `tables/eis_fit_parameters.csv` and `.xlsx`
-- `tables/polarization_curve_points.csv` and `.xlsx`
-
-## Generated figures
-
-- `figures/eis_fits`: individual Nyquist scatter plots with dotted two-circle fits.
-- `figures/eis_trends`: resistance trends by stack, current density, and sheet.
-- `figures/polarization_curves`: polarization curves and voltage trends.
-
-EIS fit rows: 801
-Polarization curve rows: 287
+- `figures/eis/individual/`: one Nyquist plot per EIS workbook sheet.
+- `figures/eis/by_condition/`: grouped Nyquist plots by stack, sheet, condition, and current density.
+- `figures/polarization/individual/`: one polarization plot per polarization workbook.
+- `figures/polarization/by_stack/`: grouped average-voltage polarization curves by stack.
+- `tables/`: plot index tables and cleaned plotting points.

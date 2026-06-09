@@ -1,0 +1,8 @@
+﻿stack,cycle_label,cycles,file,figure
+Stack1,0_BreakIn,0,data\Stack1\PolCurves\RealAgeing_PC_0_BreakIn_1.xlsx,results\figures\polarization\individual\Stack1\0_BreakIn_RealAgeing_PC_0_BreakIn_1.png
+Stack1,300Cycles,300,data\Stack1\PolCurves\RealAgeing_PC_300Cycles_1.xlsx,results\figures\polarization\individual\Stack1\300Cycles_RealAgeing_PC_300Cycles_1.png
+Stack1,528Cycles,528,data\Stack1\PolCurves\RealAgeing_PC_528Cycles_1.xlsx,results\figures\polarization\individual\Stack1\528Cycles_RealAgeing_PC_528Cycles_1.png
+Stack1,58Cycles,58,data\Stack1\PolCurves\RealAgeing_PC_58Cycles_1.xlsx,results\figures\polarization\individual\Stack1\58Cycles_RealAgeing_PC_58Cycles_1.png
+Stack2,0_BreakIn,0,data\Stack2\PolCurves\RealAgeing_PC_0_BreakIn_1.xlsx,results\figures\polarization\individual\Stack2\0_BreakIn_RealAgeing_PC_0_BreakIn_1.png
+Stack2,120Cycles,120,data\Stack2\PolCurves\RealAgeing_PC_120Cycles_1.xlsx,results\figures\polarization\individual\Stack2\120Cycles_RealAgeing_PC_120Cycles_1.png
+Stack2,449Cycles,449,data\Stack2\PolCurves\RealAgeing_PC_449Cycles_1.xlsx,results\figures\polarization\individual\Stack2\449Cycles_RealAgeing_PC_449Cycles_1.png

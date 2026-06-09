@@ -1,16 +1,16 @@
 # Realistic Accelerated Stress Tests for PEM Fuel Cells
 
-This repository contains the RealAgeing PEMFC dataset and a reproducible analysis workflow for EIS fitting, resistance tracking, and polarization-curve visualization.
+This repository contains the RealAgeing PEMFC dataset and a visualization-only workflow for quick inspection of EIS and polarization-curve data.
 
 ## Repository Structure
 
 ```text
 data/     Original dataset files, preserved without editing.
-code/     Reproducible Python analysis scripts.
-results/  Generated summary tables and figures.
+code/     Reproducible Python visualization script.
+results/  Generated figures and plot index tables.
 ```
 
-The `data/` folder is intentionally flat at the repository level:
+The data folder is kept clean at the repository root:
 
 ```text
 data/
@@ -20,82 +20,25 @@ data/
   Stack2/
 ```
 
-## Quick Analysis
-
-Run the full analysis from the repository root:
+## Quick Run
 
 ```bash
 python code/main.py
 ```
 
-The script reads all Excel files under `data/` and writes regenerated outputs to `results/`.
+The script regenerates `results/` from the Excel files under `data/`.
 
-## Key Results
+## Visualization Notes
 
-EIS resistance values are estimated by splitting each Nyquist arc into two semicircle regions and fitting one least-squares circle to each region. The split point is selected by scanning candidate boundaries and choosing the two-circle fit with the lowest residual error.
+- EIS plots are raw Nyquist-style visualizations: `Z_Re / Ohm` vs `-Z_Im / Ohm`.
+- No semicircle fitting, resistance extraction, or fitted resistance tracking is included.
+- All plots use scatter markers plus dotted guide lines.
+- Axis labels follow original column names where applicable.
+- Matplotlib is configured to use Times New Roman.
 
-| Stack | Current density (A/cm^2) | R_ohm (Ohm) | R_anode_ct (Ohm) | R_cathode_ct (Ohm) |
-| --- | ---: | ---: | ---: | ---: |
-| Stack1 | 0.3 | 0.000470 | 0.006984 | 0.041900 |
-| Stack1 | 0.7 | 0.000000 | 0.018570 | 0.040139 |
-| Stack1 | 1.0 | 0.000000 | 0.025012 | 0.051191 |
-| Stack2 | 0.3 | 0.000732 | 0.007052 | 0.039567 |
-| Stack2 | 0.7 | 0.000057 | 0.016749 | 0.037884 |
+## Operating Condition Numbers
 
-Full fitted values are saved in `results/tables/eis_fit_parameters.csv` and `results/tables/eis_fit_parameters.xlsx`.
-
-## Figures
-
-All figures use scatter markers plus dotted fit or guide lines. Axis labels follow the original dataset column names where applicable, and Matplotlib is configured to use Times New Roman.
-
-### Representative EIS Fits
-
-#### Stack1, 0 cycles, condition 1, 0.3 A/cm^2
-
-![Stack1 EIS fit](results/figures/eis_fits/Stack1/Whole_Stack/0.3Acm2/0_AfterBreakIn_condition_1_Real_Ageing_EIS-1-0_3.png)
-
-#### Stack2, 449 cycles, condition 1, 0.7 A/cm^2
-
-![Stack2 EIS fit](results/figures/eis_fits/Stack2/Whole_Stack/0.7Acm2/449Cycles_condition_1_Real_Ageing_EIS-1-0_7.png)
-
-### Resistance Trends
-
-#### Stack1 whole-stack ohmic resistance, 0.3 A/cm^2
-
-![Stack1 ohmic resistance trend](results/figures/eis_trends/Stack1_Whole_Stack_0.3Acm2_R_ohm_ohm.png)
-
-#### Stack1 whole-stack anode charge-transfer resistance, 0.3 A/cm^2
-
-![Stack1 anode charge-transfer trend](results/figures/eis_trends/Stack1_Whole_Stack_0.3Acm2_R_anode_ct_ohm.png)
-
-#### Stack1 whole-stack cathode charge-transfer resistance, 0.3 A/cm^2
-
-![Stack1 cathode charge-transfer trend](results/figures/eis_trends/Stack1_Whole_Stack_0.3Acm2_R_cathode_ct_ohm.png)
-
-### Polarization Curves
-
-#### Stack1 average-voltage polarization curves
-
-![Stack1 polarization curves](results/figures/polarization_curves/Stack1_average_voltage_polarization_curves.png)
-
-#### Stack2 average-voltage polarization curves
-
-![Stack2 polarization curves](results/figures/polarization_curves/Stack2_average_voltage_polarization_curves.png)
-
-## Output Inventory
-
-- `results/figures/eis_fits/`: individual EIS Nyquist plots for every stack, sheet, cycle, condition, and current density.
-- `results/figures/eis_trends/`: individual resistance trend plots, one resistance component per image.
-- `results/figures/polarization_curves/`: polarization curves and voltage trend figures.
-- `results/tables/eis_fit_parameters.csv`: fitted EIS resistance parameters.
-- `results/tables/polarization_curve_points.csv`: cleaned polarization-curve points.
-- `results/tables/representative_eis_figures.csv`: representative whole-stack EIS figure paths.
-
-## EIS Filename Numbering
-
-The numbering in files such as `Real_Ageing_EIS-1-0_3.xlsx` is the operating-condition reference number, not a replicate index. The mapping is defined in `data/OperatingParameters.xlsx`.
-
-For the 0-cycle EIS files containing conditions `1`, `2`, `6`, and `7`:
+The number in filenames such as `Real_Ageing_EIS-1-0_3.xlsx` is the operating-condition reference number from `data/OperatingParameters.xlsx`.
 
 | Condition | Temperature (C) | Air pressure (bar) | Air RH (%) | Air stoichiometry |
 | --- | ---: | ---: | ---: | ---: |
@@ -104,15 +47,105 @@ For the 0-cycle EIS files containing conditions `1`, `2`, `6`, and `7`:
 | 6 | 60 | 1.25 | 70 | 2 |
 | 7 | 60 | 1.25 | 70 | 3 |
 
-## Dataset Notes
+The full condition table is saved at `results/tables/operating_conditions.csv`.
 
-Project name: RealAgeing
+## EIS By Condition
 
-- `PC`: polarization curve
-- `EIS`: electrochemical impedance spectroscopy
-- `BreakIn`: directly after break-in; no cycles driven yet
-- `xxCycles`: after `xx` cycles
-- EIS current density is encoded in the filename, for example `0_3`, `0_7`, or `1_0`.
+Grouped EIS figures are saved under `results/figures/eis/by_condition/`. Each plot groups curves by cycle count for the same stack, sheet, condition, and current density.
+
+### Condition 1
+
+#### Stack1, Whole Stack, 0.3 A/cm^2
+
+![Stack1 condition 1 0.3 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_1_0.3Acm2.png)
+
+#### Stack1, Whole Stack, 0.7 A/cm^2
+
+![Stack1 condition 1 0.7 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_1_0.7Acm2.png)
+
+#### Stack2, Whole Stack, 0.3 A/cm^2
+
+![Stack2 condition 1 0.3 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_1_0.3Acm2.png)
+
+#### Stack2, Whole Stack, 0.7 A/cm^2
+
+![Stack2 condition 1 0.7 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_1_0.7Acm2.png)
+
+### Condition 2
+
+#### Stack1, Whole Stack, 0.3 A/cm^2
+
+![Stack1 condition 2 0.3 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_2_0.3Acm2.png)
+
+#### Stack1, Whole Stack, 0.7 A/cm^2
+
+![Stack1 condition 2 0.7 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_2_0.7Acm2.png)
+
+#### Stack2, Whole Stack, 0.3 A/cm^2
+
+![Stack2 condition 2 0.3 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_2_0.3Acm2.png)
+
+#### Stack2, Whole Stack, 0.7 A/cm^2
+
+![Stack2 condition 2 0.7 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_2_0.7Acm2.png)
+
+### Condition 6
+
+#### Stack1, Whole Stack, 0.3 A/cm^2
+
+![Stack1 condition 6 0.3 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_6_0.3Acm2.png)
+
+#### Stack1, Whole Stack, 0.7 A/cm^2
+
+![Stack1 condition 6 0.7 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_6_0.7Acm2.png)
+
+#### Stack2, Whole Stack, 0.3 A/cm^2
+
+![Stack2 condition 6 0.3 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_6_0.3Acm2.png)
+
+#### Stack2, Whole Stack, 0.7 A/cm^2
+
+![Stack2 condition 6 0.7 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_6_0.7Acm2.png)
+
+### Condition 7
+
+#### Stack1, Whole Stack, 0.3 A/cm^2
+
+![Stack1 condition 7 0.3 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_7_0.3Acm2.png)
+
+#### Stack1, Whole Stack, 0.7 A/cm^2
+
+![Stack1 condition 7 0.7 A/cm2](results/figures/eis/by_condition/Stack1/Whole_Stack/condition_7_0.7Acm2.png)
+
+#### Stack2, Whole Stack, 0.3 A/cm^2
+
+![Stack2 condition 7 0.3 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_7_0.3Acm2.png)
+
+#### Stack2, Whole Stack, 0.7 A/cm^2
+
+![Stack2 condition 7 0.7 A/cm2](results/figures/eis/by_condition/Stack2/Whole_Stack/condition_7_0.7Acm2.png)
+
+## Polarization Curves
+
+Grouped polarization figures are saved under `results/figures/polarization/by_stack/`.
+
+### Stack1
+
+![Stack1 polarization](results/figures/polarization/by_stack/Stack1_average_voltage.png)
+
+### Stack2
+
+![Stack2 polarization](results/figures/polarization/by_stack/Stack2_average_voltage.png)
+
+## Output Inventory
+
+- `results/figures/eis/individual/`: one EIS plot per workbook sheet.
+- `results/figures/eis/by_condition/`: grouped EIS plots by condition.
+- `results/figures/polarization/individual/`: one plot per polarization workbook.
+- `results/figures/polarization/by_stack/`: grouped polarization plots by stack.
+- `results/tables/eis_plot_index.csv`: index of all individual EIS figures.
+- `results/tables/eis_condition_plot_index.csv`: index of all grouped EIS condition figures.
+- `results/tables/polarization_plot_index.csv`: index of all individual polarization figures.
 
 ## Citation
 
