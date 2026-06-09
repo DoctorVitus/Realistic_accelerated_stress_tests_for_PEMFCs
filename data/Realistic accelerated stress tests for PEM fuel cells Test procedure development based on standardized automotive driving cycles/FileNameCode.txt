@@ -1,0 +1,15 @@
+Project name: RealAgeing
+
+Type of measurement: 
+- PC: polarization curve
+- EIS: Electrochemical impedance spectroscopy
+
+Reference number: specifies the operating conditions (see excel sheet OperatingParameters for specification)
+
+Only for polarization curves:
+Number of cycles:
+- BreakIn: directly after break-in; no cycles driven yet
+- xxCycles: after xx cycles
+
+Only for EIS:
+Current density: 0.3 or 0.7 A/cm²
